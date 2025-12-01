@@ -20,14 +20,15 @@ const std::string COURSES_OFFERED_PATH = "student_output/courses_offered.csv";
 const std::string COURSES_NOT_OFFERED_PATH = "student_output/courses_not_offered.csv";
 
 /**
- * Represents a course a student can take in ExploreCourses.
+ * Represents a course a student can take in ExploreCourses.                    
  * You must fill in the types of the fields in this struct.
  * Hint: Remember what types C++ streams work with?!
+ * 这里是要把title, number_of_units, quarter这三个字段的类型填充
  */
 struct Course {
-  /* STUDENT TODO */ title;
-  /* STUDENT TODO */ number_of_units;
-  /* STUDENT TODO */ quarter;
+  std::string title;
+  std::string number_of_units;
+  std::string quarter;
 };
 
 /**
@@ -49,17 +50,31 @@ struct Course {
  * This function should populate the `courses` vector with structs of type
  * `Course`. We want to create these structs with the records in the courses.csv
  * file, where each line is a record!
+ * 这里是要把courses.csv文件中的每一行都解析成一个Course结构体，然后放到courses向量中
+ * 就要用到split函数，把每一行按逗号分割成3个字段，分别赋值给Course结构体的title, number_of_units, quarter字段
  *
  * Hints:
  * 1) Take a look at the split function we provide in utils.cpp
  * 2) Each LINE is a record! *this is important, so we're saying it again :>)*
  * 3) The first line in the CSV defines the column names, so you can ignore it!
  *
+ * 我想我应该用CPP的文件读取，按行读取，每一行是一个record，再用split把每一个record分割和存储
+ * 
  * @param filename The name of the file to parse.
  * @param courses  A vector of courses to populate.
  */
-void parse_csv(std::string filename, std::vector<Course> courses) {
-  /* (STUDENT TODO) Your code goes here... */
+void parse_csv(std::string filename, std::vector<Course>& courses) {
+  std::ifstream ifs(filename);
+  if(!ifs.is_open()){
+    return;
+  }
+  std::string newline;
+  std::getline(ifs,newline);
+  while(std::getline(ifs,newline)){
+    auto splits = split(newline,',');
+    Course newcourses = {splits[0],splits[1],splits[2]} ;
+    courses.push_back(newcourses);
+  }
 }
 
 /**
@@ -67,8 +82,9 @@ void parse_csv(std::string filename, std::vector<Course> courses) {
  *
  * 1) Write the courses that are offered to the file
  * "student_output/courses_offered.csv"
- *
+ *把提供课程写到courses
  * 2) Delete the courses that are offered from the `all_courses` vector.
+ * 把来自all_courses的课程删掉
  * IMPORTANT: do this after you write out to the file!
  *
  * HINTS:
@@ -80,8 +96,24 @@ void parse_csv(std::string filename, std::vector<Course> courses) {
  * @param all_courses A vector of all courses gotten by calling `parse_csv`.
  *                    This vector will be modified by removing all offered courses.
  */
-void write_courses_offered(std::vector<Course> all_courses) {
-  /* (STUDENT TODO) Your code goes here... */
+void write_courses_offered(std::vector<Course>& all_courses) {
+  std::ofstream ofs(COURSES_OFFERED_PATH);
+  if(!ofs.is_open()){return;}
+  ofs<<"Title"<<","<<"Number of Units"<<","<<"Quarter"<<'\n';
+  std::vector<Course> delete_courses;
+  for (int i = 0; i < all_courses.size(); i++)
+  {
+    if(all_courses[i].quarter != "null"){
+    ofs << all_courses[i].title<<","<<all_courses[i].number_of_units<<","<<
+    all_courses[i].quarter<< '\n';
+    delete_courses.push_back(all_courses[i]);
+    }
+  }
+  for (int j = 0; j < delete_courses.size(); j++)
+  {
+    delete_elem_from_vector(all_courses,delete_courses[j]);
+  }
+  
 }
 
 /**
@@ -97,8 +129,15 @@ void write_courses_offered(std::vector<Course> all_courses) {
  *
  * @param unlisted_courses A vector of courses that are not offered.
  */
-void write_courses_not_offered(std::vector<Course> unlisted_courses) {
-  /* (STUDENT TODO) Your code goes here... */
+void write_courses_not_offered(std::vector<Course>& unlisted_courses) {
+  std::ofstream ofs(COURSES_NOT_OFFERED_PATH);
+  if(!ofs.is_open()){return;}
+  ofs<<"Title"<<","<<"Number of Units"<<","<<"Quarter"<<'\n';
+  for (int i = 0; i < unlisted_courses.size(); i++)
+  {
+    ofs << unlisted_courses[i].title<<","<<unlisted_courses[i].number_of_units<<","<<
+    unlisted_courses[i].quarter<< '\n';
+  }
 }
 
 int main() {
@@ -108,8 +147,9 @@ int main() {
   std::vector<Course> courses;
   parse_csv("courses.csv", courses);
 
-  /* Uncomment for debugging... */
-  // print_courses(courses);
+  /** Uncomment for debugging...
+  *print_courses(courses);
+  */
 
   write_courses_offered(courses);
   write_courses_not_offered(courses);

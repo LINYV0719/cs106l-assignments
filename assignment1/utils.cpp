@@ -16,6 +16,8 @@ std::ostream& operator<<(std::ostream& os, const Course& course);
 
 /**
  * Splits a string by a delimiter and returns a vector of the split strings.
+ * 通过分割符把传入的文本分割成string类型的结果，这里是按delim分割
+ * token是指分割后的每个子字符串
  * @param s     The string to split.
  * @param delim The delimiter to split by.
  * @returns     A vector of the split strings.
@@ -32,6 +34,7 @@ std::vector<std::string> split(const std::string& s, char delim) {
 
 /**
  * Deletes a Course from a vector of courses.
+ * 从课程向量中删除指定的课程，elem指删除的课程，iterator是之后要学到的，这里暂时不去理解意思
  * @param v    The vector of courses.
  * @param elem The course to delete.
  *
@@ -44,6 +47,7 @@ void delete_elem_from_vector(std::vector<Course>& v, const Course& elem) {
 
 /**
  * Prints a vector of courses (for debugging purposes)!
+ * 打印课程向量（用于调试）
  * @param vector_of_courses The vector of courses to print.
  */
 void print_courses(const std::vector<Course>& vector_of_courses) {
