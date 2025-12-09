@@ -14,6 +14,7 @@
 #include <string>
 #include <unordered_set>
 #include <sstream>
+#include <cstdlib>
 
 std::string kYourName = "Aziel Le"; // Don't forget to change this!
 
@@ -31,7 +32,7 @@ std::string kYourName = "Aziel Le"; // Don't forget to change this!
 std::set<std::string> get_applicants(std::string filename) {
   std::ifstream ifs(filename);
   if(!ifs.is_open()){
-    exit;
+    return {};
   }
   std::set<std::string> students;
   std::string newline;
@@ -41,7 +42,7 @@ std::set<std::string> get_applicants(std::string filename) {
   return students;
 }
 
-bool find_initials_matches(std::string kYourName,std::string name){
+bool find_initials_matches(const std::string& kYourName,const std::string& name){
     std::stringstream myname(kYourName);
     std::string my_first_name;
     std::string my_second_name;
@@ -52,12 +53,8 @@ bool find_initials_matches(std::string kYourName,std::string name){
     othername>>first_name>>second_name;
     bool first_judge = (my_first_name.at(0)==first_name.at(0));
     bool second_judge = (my_second_name.at(0)==second_name.at(0));
-    if(first_judge&&second_judge){
-      return 1;
-    }
-    else{
-      return 0;
-    }
+    bool if_match = (first_judge&&second_judge);
+    return if_match;
   }
 
 /**
@@ -72,8 +69,7 @@ std::queue<const std::string*> find_matches(std::string name, std::set<std::stri
   std::queue<const std::string*> match_names;
   for(const auto& student:students){
      if(find_initials_matches(name,student)){
-       const std::string* student_refference = &student;
-       match_names.push(student_refference);
+       match_names.push(&student);
      }
   }
   return match_names;
@@ -92,11 +88,10 @@ std::queue<const std::string*> find_matches(std::string name, std::set<std::stri
 std::string get_match(std::queue<const std::string*>& matches) {
   std::string match_name;
   if(matches.empty()){
-    printf("NO MATCHES FOUND.");
-    exit;
+    return "NO MATCHES FOUND.";
   }
   else{
-    int extract_number = matches.size()-2;
+    int extract_number = rand() % matches.size();
     for (int i = 0; i < extract_number; i++)
     {
       matches.pop();
