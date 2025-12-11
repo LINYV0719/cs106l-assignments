@@ -5,7 +5,13 @@ Make a Class
 ------------
 
 Q1. What’s const-correctness and why is it important?
-A1. TODO
+A1. - 对于不应该被修改的入参（尤其是大对象），使用 const T& 。对于不
+修改对象内部状态的成员函数，必须标记为 const （如 isFull() const ）。
+-- 安全性 ：编译器会强制检查，防止意外修改数据（比如在 printRollCall 里不小心改了名字）。
+- 接口清晰 ：告诉调用者“你可以放心地传这个对象给我，我保证不改它”。
+- 兼容性 ：如果不标记 const ，那么一个 const myclass 对象就无法调用这些方法。
 
 Q2. Is your class const-correct? How do you know?
-A2. TODO
+A2. 完全实现了 Const Correctness。读取数据的函数
+（ getStudentAt , isFull , printRollCall ）都标记了 const
+ ，且入参使用了 const T& 。
