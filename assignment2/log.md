@@ -9,3 +9,8 @@
 ## 遇到的问题
 
 主要的困惑是const和引用的使用，这方面还不熟练，以及返回逻辑有小问题和stringstream的提取方向搞反了，别的都还行
+
+
+$$
+H(s) = (s[0] \cdot P^{n-1} + s[1] \cdot P^{n-2} + \dots + s[n-1] \cdot P^0) \mod M
+$$

@@ -4,8 +4,14 @@ placeholders remaining in the file (and remove this comment too).
 Marriage Pact
 -------------
 
-Q1. It is your choice to use either an ordered or unordered set. In a few sentences, what are some of the tradeoffs between the two? Additionally, please give an example (that has not been shown in lecture) of a valid hash function that could be used to hash student names for an unordered set.
-A1. TODO
+Q1. It is your choice to use either an ordered or unordered set. In a few sentences, what are some of the tradeoffs 
+between the two? Additionally, please give an example (that has not been shown in lecture) of a valid hash function 
+that could be used to hash student names for an unordered set.
+A1. order set , becasue ordered set is easy to fulfill although unordered set is more efficient.
+hash function: a polynomial rolling hash,hash = hash * 31 + char_value
 
-Q2. Note that we are saving pointers to names in the queue, not names themselves. Why might this be desired in this problem? What happens if the original set where the names are stored goes out of scope and the pointers are referenced?
-A2. TODO
+Q2. Note that we are saving pointers to names in the queue, not names themselves. 
+Why might this be desired in this problem? What happens if the original set where 
+the names are stored goes out of scope and the pointers are referenced?
+A2. i think it is for efficiency , if the string is too long ,sotring pointers is to reduce the storage
+    dangling pointers , program will crash or exhibit undefined behavior becasue is try to find an unexsited name   
