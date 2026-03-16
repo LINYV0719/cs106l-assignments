@@ -41,7 +41,7 @@ std::set<std::string> get_applicants(std::string filename) {
   }
   return students;
 }
-
+/*虽然很奇怪，但是这个只检查姓和名的首字母是否匹配*/
 bool find_initials_matches(const std::string& kYourName,const std::string& name){
     std::stringstream myname(kYourName);
     std::string my_first_name;
@@ -80,7 +80,7 @@ std::queue<const std::string*> find_matches(std::string name, std::set<std::stri
  *
  * You can implement this function however you'd like, but try to do something a bit
  * more complicated than a simple `pop()`.
- *
+ * 这里我用了个随机数取余数的操作，来取匹配的名字
  * @param matches The queue of possible matches.
  * @return        Your magical one true love.
  *                Will return "NO MATCHES FOUND." if `matches` is empty.

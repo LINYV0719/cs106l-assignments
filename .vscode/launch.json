@@ -7,18 +7,20 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "f:/CODE/cs106l-assignments/assignment1",
-      "program": "f:/CODE/cs106l-assignments/assignment1/build/Debug/outDebug",
+      "externalConsole": false,
+      "environment": [],
+      "cwd": "${fileDirname}",
+      "program": "${fileDirname}/${fileBasenameNoExtension}",
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
         }
-      ]
+      ],
+      "preLaunchTask": "g++ build active file", 
+      "miDebuggerPath": "/usr/bin/gdb"
     }
   ]
 }

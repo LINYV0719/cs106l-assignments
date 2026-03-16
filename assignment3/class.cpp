@@ -1,4 +1,3 @@
-#include "class.h"
 #include <string>
 #include <stdexcept>
 #include <iostream>

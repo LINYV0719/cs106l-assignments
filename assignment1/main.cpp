@@ -82,7 +82,7 @@ void parse_csv(std::string filename, std::vector<Course>& courses) {
  *
  * 1) Write the courses that are offered to the file
  * "student_output/courses_offered.csv"
- *把提供课程写到courses
+ *把提供课程写到courses,注：写入的仅仅是已开课即quarter非空的课，删除的也是这些课。
  * 2) Delete the courses that are offered from the `all_courses` vector.
  * 把来自all_courses的课程删掉
  * IMPORTANT: do this after you write out to the file!
