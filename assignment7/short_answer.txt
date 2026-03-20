@@ -5,13 +5,15 @@ Unique Pointer
 --------------
 
 Q1. List one or two benefits of using RAII to manage memory instead manually calling `new` and `delete`.
-A1. TODO
+A1. 1.如果程序抛出异常，那么RAII能自动时报内存而delete没有机会得到执行，也没有机会释放内存
+    2.使用RAII,可以把申请和释放自动化，不用时时操心“自己有没有释放内存”
 
 Q2. When implementing move semantics for a `unique_ptr`, for example in the move constructor `unique_ptr(unique_ptr&& other)`, it is essential that we set the underlying pointer of the `other` parameter to `nullptr` before exiting the function. Explain in your own words what problem would arise if we did not.
-A2. TODO
+A2. 在离开函数前，我们要把other的指针置空，若果不这样做，this和other指针会指向同一批数据，后续修改other会影响到this的数据
 
 Q3. This method of recursive deallocation through RAII works great for small lists, but may pose a problem for longer lists. Why? Hint: what is the limit for how "deep" a recursive function's call stack can grow?
-A3. TODO
+A3. 销毁head节点时，会调用析构函数销毁，接着释放ListNode,之后他的成员变量node也调用析构函数，逐渐递归下去，对于长链表，这样的递归深度可能会超过栈空间，导致崩溃
 
 Q4. What does `std::move` do in this context? Why is it safe to use `std::move` and move semantics here?
-A4. TODO
+A4. 将head指向节点的控制权交给node的next节点，head变为空节点。
+    他能确保同一时刻，一个资源仅有一个拥有者，符合unique_ptr的操作逻辑
